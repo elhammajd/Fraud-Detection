@@ -1,0 +1,63 @@
+# Using boxplots for comparison the performance and mean square error
+
+import matplotlib.pyplot as plt
+
+# Data for boxplots
+precision_data = [rf_precision, xgb_precision, knn_precision, svm_precision, dt_precision, lr_precision, siamese_precision, cnn_precision]
+accuracy_data = [rf_accuracy, xgb_accuracy, knn_accuracy, svm_accuracy, dt_accuracy, lr_accuracy, siamese_accuracy, cnn_accuracy]
+specificity_data = [rf_specificity, xgb_specificity, knn_specificity, svm_specificity, dt_specificity, lr_specificity, siamese_specificity, cnn_specificity]
+sensitivity_data = [rf_recall, xgb_recall, knn_recall, svm_recall, dt_recall, lr_recall, siamese_recall, cnn_recall]
+f1_data = [rf_f1, xgb_f1, knn_f1, svm_f1, dt_f1, lr_f1, siamese_f1, cnn_f1]
+time_data = [rf_time, xgb_time, knn_time, svm_time, dt_time, lr_time, siamese_time, cnn_time]
+mse_data = [rf_mse, xgb_mse, knn_mse, svm_mse, dt_mse, lr_mse, siamese_mse, cnn_mse]
+
+# Algorithm labels
+algorithms = ['Random Forest', 'XGBoost', 'KNN', 'SVM', 'Decision Trees', 'Logistic Regression', 'Siamese Networks', 'CNN']
+
+# Create subplots for each metric
+fig, axes = plt.subplots(2, 4, figsize=(18, 10))
+fig.suptitle('Comparison of Performance Metrics Across Algorithms', fontsize=16)
+
+# Precision boxplot
+axes[0, 0].boxplot(precision_data, labels=algorithms, vert=False, patch_artist=True)
+axes[0, 0].set_title('Precision')
+axes[0, 0].set_xlim(0, 1)
+axes[0, 0].grid(True)
+
+# Accuracy boxplot
+axes[0, 1].boxplot(accuracy_data, labels=algorithms, vert=False, patch_artist=True)
+axes[0, 1].set_title('Accuracy')
+axes[0, 1].set_xlim(0, 1)
+axes[0, 1].grid(True)
+
+# Specificity boxplot
+axes[0, 2].boxplot(specificity_data, labels=algorithms, vert=False, patch_artist=True)
+axes[0, 2].set_title('Specificity')
+axes[0, 2].set_xlim(0, 1)
+axes[0, 2].grid(True)
+
+# Sensitivity boxplot
+axes[0, 3].boxplot(sensitivity_data, labels=algorithms, vert=False, patch_artist=True)
+axes[0, 3].set_title('Sensitivity')
+axes[0, 3].set_xlim(0, 1)
+axes[0, 3].grid(True)
+
+# F1-score boxplot
+axes[1, 0].boxplot(f1_data, labels=algorithms, vert=False, patch_artist=True)
+axes[1, 0].set_title('F1-Score')
+axes[1, 0].set_xlim(0, 1)
+axes[1, 0].grid(True)
+
+# Time boxplot
+axes[1, 1].boxplot(time_data, labels=algorithms, vert=False, patch_artist=True)
+axes[1, 1].set_title('Time (seconds)')
+axes[1, 1].grid(True)
+
+# Mean Squared Error boxplot
+axes[1, 2].boxplot(mse_data, labels=algorithms, vert=False, patch_artist=True)
+axes[1, 2].set_title('Mean Squared Error')
+axes[1, 2].grid(True)
+
+# Adjust subplot layout
+plt.tight_layout(rect=[0, 0, 1, 0.97])
+plt.show()
