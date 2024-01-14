@@ -1,0 +1,24 @@
+from scipy.stats import wilcoxon
+
+# Perform Wilcoxon Rank Test
+def perform_wilcoxon_test(results1, results2):
+    _, p_value = wilcoxon(results1, results2)
+    return p_value
+
+#Repeat the process for comparing the best algorithm (for instance, if you find the Siamese Network to be the best) with other algorithms using the following code.
+
+# Compare Siamese Network and CNN
+siamese_cnn_p_value = perform_wilcoxon_test(siamese_results, cnn_results)
+print("Siamese vs CNN p-value:", siamese_cnn_p_value)
+
+# Compare Siamese Network and Random Forest
+siamese_rf_p_value = perform_wilcoxon_test(siamese_results, rf_results)
+print("Siamese vs Random Forest p-value:", siamese_rf_p_value)
+
+# Print results for other algorithms
+algorithm_names = ['CNN', 'Random Forest', 'XGBoost', 'K-Nearest Neighbors', 'SVM', 'Decision Trees', 'Logistic Regression']
+algorithm_results = [cnn_results, rf_results, xgb_results, knn_results, svm_results, dt_results, lr_results]
+
+for algorithm_name, algorithm_result in zip(algorithm_names, algorithm_results):
+    p_value = perform_wilcoxon_test(siamese_results, algorithm_result)
+    print(f"Siamese vs {algorithm_name} p-value:", p_value)
