@@ -1,0 +1,44 @@
+#Comparing Roc Curves of algorithms
+import matplotlib.pyplot as plt
+from sklearn.metrics import roc_curve, auc
+
+# Data for ROC curves
+fpr_rf, tpr_rf, _ = roc_curve(y_test, rf_predictions)
+fpr_xgb, tpr_xgb, _ = roc_curve(y_test, xgb_predictions)
+fpr_knn, tpr_knn, _ = roc_curve(y_test, knn_predictions)
+fpr_svm, tpr_svm, _ = roc_curve(y_test, svm_predictions)
+fpr_dt, tpr_dt, _ = roc_curve(y_test, dt_predictions)
+fpr_lr, tpr_lr, _ = roc_curve(y_test, lr_predictions)
+fpr_siamese, tpr_siamese, _ = roc_curve(y_test, siamese_predictions)
+fpr_cnn, tpr_cnn, _ = roc_curve(y_test, cnn_predictions)
+
+# AUC for ROC curves
+roc_auc_rf = auc(fpr_rf, tpr_rf)
+roc_auc_xgb = auc(fpr_xgb, tpr_xgb)
+roc_auc_knn = auc(fpr_knn, tpr_knn)
+roc_auc_svm = auc(fpr_svm, tpr_svm)
+roc_auc_dt = auc(fpr_dt, tpr_dt)
+roc_auc_lr = auc(fpr_lr, tpr_lr)
+roc_auc_siamese = auc(fpr_siamese, tpr_siamese)
+roc_auc_cnn = auc(fpr_cnn, tpr_cnn)
+
+# Algorithm labels
+algorithms = ['Random Forest', 'XGBoost', 'KNN', 'SVM', 'Decision Trees', 'Logistic Regression', 'Siamese Networks', 'CNN']
+
+# Create ROC curve plot
+plt.figure(figsize=(8, 8))
+plt.plot(fpr_rf, tpr_rf, label=f'Random Forest (AUC = {roc_auc_rf:.2f})')
+plt.plot(fpr_xgb, tpr_xgb, label=f'XGBoost (AUC = {roc_auc_xgb:.2f})')
+plt.plot(fpr_knn, tpr_knn, label=f'KNN (AUC = {roc_auc_knn:.2f})')
+plt.plot(fpr_svm, tpr_svm, label=f'SVM (AUC = {roc_auc_svm:.2f})')
+plt.plot(fpr_dt, tpr_dt, label=f'Decision Trees (AUC = {roc_auc_dt:.2f})')
+plt.plot(fpr_lr, tpr_lr, label=f'Logistic Regression (AUC = {roc_auc_lr:.2f})')
+plt.plot(fpr_siamese, tpr_siamese, label=f'Siamese Networks (AUC = {roc_auc_siamese:.2f})')
+plt.plot(fpr_cnn, tpr_cnn, label=f'CNN (AUC = {roc_auc_cnn:.2f})')
+
+plt.plot([0, 1], [0, 1], linestyle='--', color='gray', label='Random Guess')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Receiver Operating Characteristic (ROC) Curve')
+plt.legend()
+plt.show()
