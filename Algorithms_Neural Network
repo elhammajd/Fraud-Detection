@@ -1,0 +1,107 @@
+#CNN and siamese Network
+import time
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix, accuracy_score, f1_score, precision_score, recall_score, mean_squared_error
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+
+# Load your data
+# Assuming your data is in a DataFrame 'df' with features and labels
+# e.g., X = df.drop('label', axis=1), y = df['label']
+# Make sure your labels are '0' and '1'
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Standardize features
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Siamese Network
+def create_siamese_network(input_shape):
+    input_layer = layers.Input(shape=input_shape)
+    base_network = keras.Sequential([
+        layers.Dense(128, activation='relu'),
+        layers.Dropout(0.2),
+        layers.Dense(64, activation='relu'),
+        layers.Dropout(0.2),
+        layers.Dense(32, activation='relu'),
+    ])
+    processed = base_network(input_layer)
+    similarity = layers.Dot(axes=1, normalize=True)([processed, processed])
+    siamese_network = keras.Model(inputs=input_layer, outputs=similarity)
+    return siamese_network
+
+siamese_model = create_siamese_network(X_train_scaled.shape[1:])
+siamese_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+start_time = time.time()
+siamese_model.fit([X_train_scaled, X_train_scaled], y_train, epochs=10, batch_size=32, validation_split=0.2)
+siamese_time = time.time() - start_time
+
+# Predictions
+siamese_predictions = siamese_model.predict([X_test_scaled, X_test_scaled])
+siamese_predictions = np.round(siamese_predictions)
+siamese_conf_matrix = confusion_matrix(y_test, siamese_predictions)
+siamese_accuracy = accuracy_score(y_test, siamese_predictions)
+siamese_f1 = f1_score(y_test, siamese_predictions)
+siamese_precision = precision_score(y_test, siamese_predictions)
+siamese_recall = recall_score(y_test, siamese_predictions)
+siamese_mse = mean_squared_error(y_test, siamese_predictions)
+
+# Convolutional Neural Network (CNN)
+cnn_model = keras.Sequential([
+    layers.Conv1D(32, kernel_size=3, activation='relu', input_shape=(X_train_scaled.shape[1], 1)),
+    layers.MaxPooling1D(pool_size=2),
+    layers.Flatten(),
+    layers.Dense(128, activation='relu'),
+    layers.Dropout(0.2),
+    layers.Dense(64, activation='relu'),
+    layers.Dropout(0.2),
+    layers.Dense(1, activation='sigmoid')
+])
+
+cnn_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+# Reshape input for CNN
+X_train_reshaped = np.expand_dims(X_train_scaled, axis=-1)
+X_test_reshaped = np.expand_dims(X_test_scaled, axis=-1)
+
+start_time = time.time()
+cnn_model.fit(X_train_reshaped, y_train, epochs=10, batch_size=32, validation_split=0.2)
+cnn_time = time.time() - start_time
+
+# Predictions
+cnn_predictions = cnn_model.predict(X_test_reshaped)
+cnn_predictions = np.round(cnn_predictions)
+cnn_conf_matrix = confusion_matrix(y_test, cnn_predictions)
+cnn_accuracy = accuracy_score(y_test, cnn_predictions)
+cnn_f1 = f1_score(y_test, cnn_predictions)
+cnn_precision = precision_score(y_test, cnn_predictions)
+cnn_recall = recall_score(y_test, cnn_predictions)
+cnn_mse = mean_squared_error(y_test, cnn_predictions)
+
+# Print results
+print("Siamese Network:")
+print("Time:", siamese_time)
+print("Confusion Matrix:\n", siamese_conf_matrix)
+print("Accuracy:", siamese_accuracy)
+print("F1 Score:", siamese_f1)
+print("Precision:", siamese_precision)
+print("Recall:", siamese_recall)
+print("Mean Squared Error:", siamese_mse)
+
+print("\nConvolutional Neural Network:")
+print("Time:", cnn_time)
+print("Confusion Matrix:\n", cnn_conf_matrix)
+print("Accuracy:", cnn_accuracy)
+print("F1 Score:", cnn_f1)
+print("Precision:", cnn_precision)
+print("Recall:", cnn_recall)
+print("Mean Squared Error:", cnn_mse)
