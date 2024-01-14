@@ -1,0 +1,38 @@
+# comparing confusion matrix among algorithms
+import matplotlib.pyplot as plt
+
+# Data for boxplots
+tp_data = [rf_conf_matrix[1, 1], xgb_conf_matrix[1, 1], knn_conf_matrix[1, 1], svm_conf_matrix[1, 1], 
+           dt_conf_matrix[1, 1], lr_conf_matrix[1, 1], siamese_conf_matrix[1, 1], cnn_conf_matrix[1, 1]]
+tn_data = [rf_conf_matrix[0, 0], xgb_conf_matrix[0, 0], knn_conf_matrix[0, 0], svm_conf_matrix[0, 0], 
+           dt_conf_matrix[0, 0], lr_conf_matrix[0, 0], siamese_conf_matrix[0, 0], cnn_conf_matrix[0, 0]]
+fp_data = [rf_conf_matrix[0, 1], xgb_conf_matrix[0, 1], knn_conf_matrix[0, 1], svm_conf_matrix[0, 1], 
+           dt_conf_matrix[0, 1], lr_conf_matrix[0, 1], siamese_conf_matrix[0, 1], cnn_conf_matrix[0, 1]]
+fn_data = [rf_conf_matrix[1, 0], xgb_conf_matrix[1, 0], knn_conf_matrix[1, 0], svm_conf_matrix[1, 0], 
+           dt_conf_matrix[1, 0], lr_conf_matrix[1, 0], siamese_conf_matrix[1, 0], cnn_conf_matrix[1, 0]]
+
+# Algorithm labels
+algorithms = ['Random Forest', 'XGBoost', 'KNN', 'SVM', 'Decision Trees', 'Logistic Regression', 'Siamese Networks', 'CNN']
+
+# Create subplots for each metric
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+fig.suptitle('Comparison of Confusion Matrix Metrics Across Algorithms', fontsize=16)
+
+# True Positive (TP) bar plot
+axes[0, 0].bar(algorithms, tp_data, color='green')
+axes[0, 0].set_title('True Positives (TP)')
+
+# True Negative (TN) bar plot
+axes[0, 1].bar(algorithms, tn_data, color='blue')
+axes[0, 1].set_title('True Negatives (TN)')
+
+# False Positive (FP) bar plot
+axes[1, 0].bar(algorithms, fp_data, color='red')
+axes[1, 0].set_title('False Positives (FP)')
+
+# False Negative (FN) bar plot
+axes[1, 1].bar(algorithms, fn_data, color='orange')
+axes[1, 1].set_title('False Negatives (FN)')
+
+plt.tight_layout(rect=[0, 0, 1, 0.97])  # Adjust subplot layout
+plt.show()
