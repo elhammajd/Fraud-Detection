@@ -10,9 +10,17 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 
-# Load your data
+# Function to calculate specificity and sensitivity from confusion matrix
+def calculate_specificity_sensitivity(conf_matrix):
+    tn, fp, fn, tp = conf_matrix.ravel()
+    specificity = tn / (tn + fp)
+    sensitivity = tp / (tp + fn)
+    recall = sensitivity
+    return recall, specificity, sensitivity
+
+# Load the dataset
 # Assuming your data is in a DataFrame 'df' with features and labels
-# e.g., X = df.drop('label', axis=1), y = df['label']
+# Imagine X = df.drop('label', axis=1), y = df['label']
 # Make sure your labels are '0' and '1'
 
 # Split the data into training and testing sets
@@ -52,7 +60,7 @@ siamese_conf_matrix = confusion_matrix(y_test, siamese_predictions)
 siamese_accuracy = accuracy_score(y_test, siamese_predictions)
 siamese_f1 = f1_score(y_test, siamese_predictions)
 siamese_precision = precision_score(y_test, siamese_predictions)
-siamese_recall = recall_score(y_test, siamese_predictions)
+siamese_recall, siamese_specificity, siamese_sensitivity = calculate_specificity_sensitivity(siamese_conf_matrix)
 siamese_mse = mean_squared_error(y_test, siamese_predictions)
 
 # Convolutional Neural Network (CNN)
@@ -84,7 +92,7 @@ cnn_conf_matrix = confusion_matrix(y_test, cnn_predictions)
 cnn_accuracy = accuracy_score(y_test, cnn_predictions)
 cnn_f1 = f1_score(y_test, cnn_predictions)
 cnn_precision = precision_score(y_test, cnn_predictions)
-cnn_recall = recall_score(y_test, cnn_predictions)
+cnn_recall, cnn_specificity, cnn_sensitivity = calculate_specificity_sensitivity(cnn_conf_matrix)
 cnn_mse = mean_squared_error(y_test, cnn_predictions)
 
 # Print results
@@ -95,6 +103,8 @@ print("Accuracy:", siamese_accuracy)
 print("F1 Score:", siamese_f1)
 print("Precision:", siamese_precision)
 print("Recall:", siamese_recall)
+print("Specificity:", siamese_specificity)
+print("Sensitivity:", siamese_sensitivity)
 print("Mean Squared Error:", siamese_mse)
 
 print("\nConvolutional Neural Network:")
@@ -104,4 +114,6 @@ print("Accuracy:", cnn_accuracy)
 print("F1 Score:", cnn_f1)
 print("Precision:", cnn_precision)
 print("Recall:", cnn_recall)
+print("Specificity:", cnn_specificity)
+print("Sensitivity:", cnn_sensitivity)
 print("Mean Squared Error:", cnn_mse)
