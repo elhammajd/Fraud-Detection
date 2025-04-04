@@ -15,6 +15,19 @@ The Fraud Detection Package is a modular Python toolkit designed for detecting f
 - **Statistical Analysis:** Perform the Wilcoxon signed–rank test for paired data comparisons.
 - **Extensible Design:** Easily customize or extend the package for new models, metrics, or tests.
 
+## Package Structure
+fraud_detection/
+├── __init__.py
+├── data_processing.py
+├── neural_network.py
+├── non_neural_ensemble.py
+├── ensemble.py
+├── metrics.py
+└── visualization.py
+setup.py
+example_usage.py
+
+
 ## Installation
 
 1. **Clone the repository:**
