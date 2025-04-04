@@ -35,7 +35,14 @@ The Fraud Detection Package is a modular Python toolkit for detecting fraudulent
 
 ## Package Structure
 
-fraud_detection/ ├── init.py # Package initialization ├── data_processing.py # Data loading, preprocessing, splitting, and balancing ├── neural_network.py # Neural network model construction and training ├── non_neural_ensemble.py # Building and training of traditional ensemble classifiers ├── ensemble.py # Combining neural and non-neural ensembles using a meta-classifier ├── metrics.py # Performance metrics evaluation └── visualization.py # Data visualization and statistical testing setup.py # Package installation configuration example_usage.py # Example script demonstrating package usage
+fraud_detection/ 
+├── init.py # Package initialization 
+├── data_processing.py # Data loading, preprocessing, splitting, and balancing 
+├── neural_network.py # Neural network model construction and training 
+├── non_neural_ensemble.py # Building and training of traditional ensemble classifiers 
+├── ensemble.py # Combining neural and non-neural ensembles using a meta-classifier 
+├── metrics.py # Performance metrics evaluation 
+└── visualization.py # Data visualization and statistical testing setup.py # Package installation configuration example_usage.py # Example script demonstrating package usage
 
 bash
 Copy
