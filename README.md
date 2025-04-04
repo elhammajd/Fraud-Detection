@@ -1,4 +1,4 @@
-# Fraud Detection Package
+# Fraud Detection
 
 ## Overview
 
