@@ -36,6 +36,7 @@ The Fraud Detection Package is a modular Python toolkit for detecting fraudulent
 ## Package Structure
 
 fraud_detection/ 
+
 ├── init.py # Package initialization 
 
 ├── data_processing.py # Data loading, preprocessing, splitting, and balancing 
