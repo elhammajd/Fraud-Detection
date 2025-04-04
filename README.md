@@ -51,9 +51,6 @@ fraud_detection/
 
 └── visualization.py # Data visualization and statistical testing setup.py # Package installation configuration example_usage.py # Example script demonstrating package usage
 
-bash
-Copy
-
 ## Installation
 
 1. **Clone the Repository**
@@ -65,8 +62,6 @@ Set Up a Virtual Environment (Recommended)
 
 Create and activate a virtual environment to manage dependencies:
 
-bash
-Copy
 python -m venv venv
 # Activate on Linux/Mac:
 source venv/bin/activate
@@ -76,8 +71,6 @@ Install the Package
 
 Install the package in editable mode:
 
-bash
-Copy
 pip install -e .
 This will install the following dependencies:
 
